@@ -15,15 +15,31 @@ object Libs {
     object Ktor {
         private const val ktorVersion = "2.1.3"
         private const val loggerVersion = "1.2.11"
-        const val serverCore = "io.ktor:ktor-server-core-jvm:$ktorVersion"
-        const val serverNetty = "io.ktor:ktor-server-netty-jvm:$ktorVersion"
-        const val logBack = "ch.qos.logback:logback-classic:$loggerVersion"
-        const val logger = "io.ktor:ktor-server-call-logging:$ktorVersion"
-        const val cachingHeaders = "io.ktor:ktor-server-caching-headers:$ktorVersion"
-        const val conditionalHeaders = "io.ktor:ktor-server-conditional-headers:$ktorVersion"
-        const val contentNegotiation = "io.ktor:ktor-server-content-negotiation:$ktorVersion"
-        const val jsonSerialization = "io.ktor:ktor-serialization-kotlinx-json:$ktorVersion"
+
+
+        object Client {
+            const val core = "io.ktor:ktor-client-core:$ktorVersion"
+            const val cio = "io.ktor:ktor-client-cio:$ktorVersion"
+            const val logging = "io.ktor:ktor-client-logging:$ktorVersion"
+            const val jsonSerialization = "io.ktor:ktor-client-serialization:$ktorVersion"
+            const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:$ktorVersion"
+        }
+
+        object Server {
+            const val core = "io.ktor:ktor-server-core-jvm:$ktorVersion"
+            const val netty = "io.ktor:ktor-server-netty-jvm:$ktorVersion"
+
+            const val logger = "io.ktor:ktor-server-call-logging:$ktorVersion"
+            const val cachingHeaders = "io.ktor:ktor-server-caching-headers:$ktorVersion"
+            const val conditionalHeaders = "io.ktor:ktor-server-conditional-headers:$ktorVersion"
+            const val contentNegotiation = "io.ktor:ktor-server-content-negotiation:$ktorVersion"
+        }
+
+        object Logger {
+            const val logBack = "ch.qos.logback:logback-classic:$loggerVersion"
+        }
+        object Json {
+            const val jsonSerialization = "io.ktor:ktor-serialization-kotlinx-json:$ktorVersion"
+        }
     }
-
-
 }

@@ -1,7 +1,8 @@
-package com.playground.cache.store
+package com.playground.cache.store.internal
 
 import com.playground.cache.models.Version
 import com.playground.cache.models.Versions
+import com.playground.cache.store.VersionStore
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import okio.FileSystem
@@ -45,6 +46,5 @@ internal class FileVersionStore(
     private fun deserializeVersions(value: String) = json.decodeFromString(Versions.serializer(), value)
     private fun serializeVersions(versions: Versions): String = json.encodeToString(Versions.serializer(), versions)
 }
-
 
 private fun Versions.prepend(version: Version) = copy(list = listOf(version) + list)

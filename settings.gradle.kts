@@ -27,4 +27,5 @@ include("models")
 include("backoffice")
 include("datastore")
 include("server")
+include("device")
 
