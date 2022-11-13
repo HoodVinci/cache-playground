@@ -3,7 +3,7 @@ plugins {
 }
 
 application {
-    mainClass.set("com.playground.cache.backend.BackendKt")
+    mainClass.set("com.playground.cache.server.ServerKt")
 }
 
 dependencies {
@@ -16,4 +16,9 @@ dependencies {
     implementation(Libs.Ktor.logBack)
     implementation(Libs.Ktor.cachingHeaders)
     implementation(Libs.Ktor.conditionalHeaders)
+    implementation(Libs.Ktor.contentNegotiation)
+    implementation(Libs.Ktor.jsonSerialization)
+    implementation(Libs.kotlinxSerializationJson)
+
+
 }

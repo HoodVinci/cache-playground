@@ -11,10 +11,10 @@ fun main(args: Array<String>) {
 }
 
 private fun readVersionFromCli(): Version {
-    println("Enter title :")
+    print("Enter title : ")
     val title: String = readln()
 
-    println("Enter description :")
+    print("Enter description : ")
     val description: String = readln()
     return Version(title, description)
 }

@@ -4,12 +4,14 @@ import com.playground.cache.store.VersionStore
 import com.playground.cache.store.createVersionStore
 import io.ktor.http.*
 import io.ktor.http.content.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.cachingheaders.*
 import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.conditionalheaders.*
+import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
@@ -20,8 +22,13 @@ import org.slf4j.event.Level
 
 fun main(args: Array<String>) {
 
+
     val store = createVersionStore()
     embeddedServer(Netty, port = 8080) {
+
+        install(ContentNegotiation) {
+            json()
+        }
         install(CachingHeaders) {
             options { _, _ ->
                 CachingOptions(CacheControl.MaxAge(maxAgeSeconds = 60))
@@ -51,12 +58,7 @@ fun main(args: Array<String>) {
 
 private fun Application.configureRooting(store: VersionStore) {
     routing {
-        get("/versions") {
-            call.caching = CachingOptions(
-
-            )
-            call.respondText(store.get().joinToString("\n", it.toString()))
-        }
+        get("/versions") { call.respond(store.get()) }
     }
 }
 

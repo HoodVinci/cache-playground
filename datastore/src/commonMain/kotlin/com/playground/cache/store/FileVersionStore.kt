@@ -1,7 +1,9 @@
 package com.playground.cache.store
 
 import com.playground.cache.models.Version
+import com.playground.cache.models.Versions
 import kotlinx.datetime.Instant
+import kotlinx.serialization.json.Json
 import okio.FileSystem
 import okio.Path.Companion.toPath
 
@@ -9,19 +11,23 @@ internal class FileVersionStore(
     private val fileSystem: FileSystem
 ) : VersionStore {
 
-    private val filePath = "versions.list".toPath()
+    private val json = Json {
+        prettyPrint = true
+        isLenient = true
+        ignoreUnknownKeys = true
+    }
+
+    private val filePath = "versions.json".toPath()
 
     init {
         fileSystem.openReadWrite(filePath)
     }
 
-
     override fun add(version: Version) {
-        val versions = listOf(version) + readVersions()
-        writeVersions(versions)
+        writeVersions(readVersions().prepend(version))
     }
 
-    override fun get(): List<Version> = readVersions()
+    override fun get(): List<Version> = readVersions().list
 
     override fun getLastModification(): Instant =
         Instant.fromEpochMilliseconds(fileSystem.metadata(filePath).lastModifiedAtMillis ?: 0)
@@ -29,28 +35,16 @@ internal class FileVersionStore(
     override fun getContentHash(): String = fileSystem
         .read(filePath) { readByteString() }.sha256().base64()
 
-    private fun readVersions() =
-        fileSystem
-            .read(filePath) { readUtf8() }
-            .lines()
-            .mapNotNull(::lineToVersion)
+    private fun writeVersions(versions: Versions) =
+        fileSystem.write(filePath) { writeUtf8(serializeVersions(versions)) }
 
-    private fun writeVersions(versions: List<Version>) =
-        fileSystem
-            .write(filePath) {
-                writeUtf8(versionsToString(versions))
-            }
+    private fun readVersions(): Versions = runCatching {
+        fileSystem.read(filePath) { deserializeVersions(readUtf8()) }
+    }.getOrDefault(Versions(emptyList()))
 
+    private fun deserializeVersions(value: String) = json.decodeFromString(Versions.serializer(), value)
+    private fun serializeVersions(versions: Versions): String = json.encodeToString(Versions.serializer(), versions)
 }
 
-private fun versionsToString(versions: List<Version>) =
-    versions.joinToString("\n", transform = ::versionToLine)
 
-private fun versionToLine(version: Version) =
-    listOf(version.name, version.description).joinToString(",")
-
-private fun lineToVersion(line: String): Version? = runCatching {
-    val serialVersion = line.split(",")
-    Version(serialVersion[0], serialVersion[1])
-}.getOrNull()
-
+private fun Versions.prepend(version: Version) = copy(list = listOf(version) + list)

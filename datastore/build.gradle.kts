@@ -11,8 +11,8 @@ kotlin {
                 api(projects.models)
                 implementation(Libs.okio)
                 api(Libs.datetime)
+                implementation(Libs.kotlinxSerializationJson)
             }
         }
-
     }
 }

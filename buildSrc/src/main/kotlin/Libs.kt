@@ -10,6 +10,8 @@ object Libs {
 
     const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 
+    const val kotlinxSerializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+
     object Ktor {
         private const val ktorVersion = "2.1.3"
         private const val loggerVersion = "1.2.11"
@@ -19,6 +21,8 @@ object Libs {
         const val logger = "io.ktor:ktor-server-call-logging:$ktorVersion"
         const val cachingHeaders = "io.ktor:ktor-server-caching-headers:$ktorVersion"
         const val conditionalHeaders = "io.ktor:ktor-server-conditional-headers:$ktorVersion"
+        const val contentNegotiation = "io.ktor:ktor-server-content-negotiation:$ktorVersion"
+        const val jsonSerialization = "io.ktor:ktor-serialization-kotlinx-json:$ktorVersion"
     }
 
 
