@@ -1,4 +1,4 @@
-package com.playground.cache.backend
+package com.playground.cache.backoffice
 
 import com.playground.cache.models.Version
 import com.playground.cache.store.createVersionStore

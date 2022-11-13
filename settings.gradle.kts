@@ -24,7 +24,7 @@ pluginManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include("client")
 include("models")
-include("backend")
+include("backoffice")
 include("datastore")
 include("server")
 

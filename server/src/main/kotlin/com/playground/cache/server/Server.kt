@@ -1,6 +1,7 @@
 package com.playground.cache.server
 
 import com.playground.cache.store.VersionStore
+import com.playground.cache.store.createVersionStore
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -14,13 +15,12 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 import io.ktor.util.*
 import kotlinx.datetime.toJavaInstant
-import okio.FileSystem
 import org.slf4j.event.Level
 
 
 fun main(args: Array<String>) {
 
-    val store = VersionStore(FileSystem.SYSTEM)
+    val store = createVersionStore()
     embeddedServer(Netty, port = 8080) {
         install(CachingHeaders) {
             options { _, _ ->
