@@ -1,0 +1,24 @@
+
+sequenceDiagram
+    loop first call
+        Application ->> Client : get data
+        Client ->> Server : GET /data
+        Server ->> Client : body=data headers[ETag]="sha1somthg"
+        Client ->> Application : data
+    end
+
+    loop call content has not been modified
+        Application ->> Client : get data
+        Client ->> Server :  GET headers[If-None_Match]="sha1somthg"
+        Server ->> Server :  check if content has same signature
+        Server ->> Client :  304 Not Modified body=[]
+        Client ->> Application : data
+    end
+
+     loop call content has been modified
+        Application ->> Client : get data
+        Client ->> Server :  GET headers[If-None_Match]="sha1somthg"
+        Server ->> Server :  content has been modified
+        Server ->> Client :  body=data headers[ETag]="sha1somthg"
+        Client ->> Application : data
+    end

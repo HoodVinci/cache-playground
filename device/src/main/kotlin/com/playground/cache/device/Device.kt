@@ -11,8 +11,8 @@ fun main(args: Array<String>) {
     val client = createApi("http://0.0.0.0:8080")
 
     runBlocking {
-        repeat(10) {
-            client.getVersions()
+        repeat(20) {
+            println("device call n°$it ${client.getVersions()}")
             delay(10.seconds)
         }
     }

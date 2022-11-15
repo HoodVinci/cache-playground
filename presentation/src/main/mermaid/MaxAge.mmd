@@ -1,0 +1,22 @@
+
+sequenceDiagram
+    loop first call
+        Application ->> Client : get data
+        Client ->> Server : GET /data
+        Server ->> Client : body=data headers[Cache-control]=max-age=60
+        Client ->> Application : data
+    end
+
+    loop call within 60 seconds
+        Application ->> Client : get data
+        Client ->> Client : valid cached data
+        Client ->> Application : data
+    end
+
+     loop call after 60 seconds
+        Application ->> Client : get data
+        Client ->> Client : cache is out of date
+        Client ->> Server : GET /data
+        Server ->> Client : body=data headers[Cache-control]=max-age=60
+        Client ->> Application : data
+     end

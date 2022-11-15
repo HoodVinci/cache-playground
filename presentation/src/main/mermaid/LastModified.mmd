@@ -1,0 +1,24 @@
+
+sequenceDiagram
+    loop first call
+        Application ->> Client : get data
+        Client ->> Server : GET /data
+        Server ->> Client : body=data headers[Last-Modified]=Mon, 14 Nov 2022 09:34:38 GMT
+        Client ->> Application : data
+    end
+
+    loop call content has not been modified
+        Application ->> Client : get data
+        Client ->> Server :  GET headers[If-Modified-Since]=Mon, 14 Nov 2022 09:34:38 GMT
+        Server ->> Server :  content has not changed since Mon, 14 Nov 2022 09:34:38 GMT
+        Server ->> Client :  304 Not Modified body=[]
+        Client ->> Application : data
+    end
+
+     loop call content has been modified
+        Application ->> Client : get data
+        Client ->> Server :  GET headers[[If-Modified-Since]=Mon, 14 Nov 2022 09:34:38 GMT
+        Server ->> Server :  content has changed on Mon, 14 Nov 2022 09:44:38 GMT
+        Server ->> Client :  body=data headers[Last-Modified]=Mon, 14 Nov 2022 09:44:38 GMT
+        Client ->> Application : data
+    end

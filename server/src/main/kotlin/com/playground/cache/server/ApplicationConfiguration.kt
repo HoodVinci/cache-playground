@@ -41,7 +41,7 @@ private fun Application.configureLogging() {
 private fun Application.configureCaching(store: VersionStore) {
     install(CachingHeaders) {
         options { _, _ ->
-            CachingOptions(CacheControl.MaxAge(maxAgeSeconds = 60))
+            CachingOptions(CacheControl.MaxAge(maxAgeSeconds = 20))
         }
     }
     install(ConditionalHeaders) {
