@@ -8,6 +8,8 @@ object Libs {
 
     const val okio = "com.squareup.okio:okio:3.2.0"
 
+    const val okhttp = "com.squareup.okhttp3:okhttp:4.5.0"
+
     const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 
     const val kotlinxSerializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"

@@ -29,4 +29,5 @@ include("datastore")
 include("server")
 include("device")
 include("presentation")
+include("test-calls")
 
